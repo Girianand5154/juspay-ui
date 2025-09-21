@@ -320,7 +320,7 @@ export default function Dashboard() {
                         boxShadow: darkMode
                           ? '0 8px 32px rgba(0, 0, 0, 0.3)'
                           : '0 8px 32px rgba(0, 0, 0, 0.1)',
-                        border: '1px solid rgba(255, 255, 255, 0.1)',
+                        border: darkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(229, 231, 235, 1)',
                         backdropFilter: 'blur(10px)',
                         '&::before': {
                           content: '""',

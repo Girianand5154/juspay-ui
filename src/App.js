@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import { Construction } from '@mui/icons-material';
 import SidebarEnhanced from './components/SidebarEnhanced';
 import TopbarEnhanced from './components/TopbarEnhanced';
 import Dashboard from './components/Dashboard';
@@ -30,19 +33,127 @@ function AppContent() {
       case 'Order List':
         return <OrderListEnhanced />;
       case 'eCommerce':
-        return <Dashboard />;
+        return (
+          <Dashboard />
+        );
       case 'Overview':
         return (
-          <Box sx={{ p: 3 }}>
-            <h1>Overview Dashboard</h1>
-            <p>This is the overview page content with modern styling.</p>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              minHeight: '60vh',
+              p: 3
+            }}
+          >
+            <Paper
+              elevation={3}
+              sx={{
+                p: 4,
+                textAlign: 'center',
+                maxWidth: 400,
+                width: '100%'
+              }}
+            >
+              <Construction sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }} />
+              <Typography variant="h4" gutterBottom>
+                Page Under Construction
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
+                This page is currently being developed. Please check back later.
+              </Typography>
+            </Paper>
           </Box>
         );
       case 'Projects':
         return (
-          <Box sx={{ p: 3 }}>
-            <h1>Projects Dashboard</h1>
-            <p>This is the projects page content with modern styling.</p>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              minHeight: '60vh',
+              p: 3
+            }}
+          >
+            <Paper
+              elevation={3}
+              sx={{
+                p: 4,
+                textAlign: 'center',
+                maxWidth: 400,
+                width: '100%'
+              }}
+            >
+              <Construction sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }} />
+              <Typography variant="h4" gutterBottom>
+                Page Under Construction
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
+                This page is currently being developed. Please check back later.
+              </Typography>
+            </Paper>
+          </Box>
+        );
+      case 'Default':
+        return (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              minHeight: '60vh',
+              p: 3
+            }}
+          >
+            <Paper
+              elevation={3}
+              sx={{
+                p: 4,
+                textAlign: 'center',
+                maxWidth: 400,
+                width: '100%'
+              }}
+            >
+              <Construction sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }} />
+              <Typography variant="h4" gutterBottom>
+                Page Under Construction
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
+                This page is currently being developed. Please check back later.
+              </Typography>
+            </Paper>
+          </Box>
+        );
+      case 'Online Courses':
+        return (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              minHeight: '60vh',
+              p: 3
+            }}
+          >
+            <Paper
+              elevation={3}
+              sx={{
+                p: 4,
+                textAlign: 'center',
+                maxWidth: 400,
+                width: '100%'
+              }}
+            >
+              <Construction sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }} />
+              <Typography variant="h4" gutterBottom>
+                Page Under Construction
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
+                This page is currently being developed. Please check back later.
+              </Typography>
+            </Paper>
           </Box>
         );
       default:
