@@ -1,6 +1,6 @@
 import React from 'react';
-import { AppBar, Toolbar, IconButton, InputBase, Box, Badge, Tooltip, Typography, Chip } from '@mui/material';
-import { Search, Brightness4, History, Notifications, NavigateNext, Settings, AccountCircle } from '@mui/icons-material';
+import { AppBar, Toolbar, IconButton, InputBase, Box, Badge, Tooltip, Typography, Chip, useTheme as muiUseTheme } from '@mui/material';
+import { Search, Brightness4, History, Notifications, NavigateNext, Settings, AccountCircle, Menu } from '@mui/icons-material';
 import { styled, alpha } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
@@ -64,15 +64,16 @@ const buttonVariants = {
   tap: { scale: 0.95 },
 };
 
-export default function TopbarEnhanced({ toggleNotifications, notificationsOpen, currentPage = 'eCommerce' }) {
+export default function TopbarEnhanced({ toggleNotifications, notificationsOpen, currentPage = 'eCommerce', toggleSidebar }) {
   const { darkMode, toggleDarkMode } = useTheme();
+  const muiTheme = muiUseTheme();
 
   return (
     <AppBar
       position="static"
       color="transparent"
       elevation={0}
-      sx={{
+      sx={(theme) => ({
         background: darkMode
           ? 'rgba(30, 41, 59, 0.85)'
           : 'rgba(255, 255, 255, 0.85)',
@@ -81,11 +82,66 @@ export default function TopbarEnhanced({ toggleNotifications, notificationsOpen,
         boxShadow: darkMode
           ? '0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2)'
           : '0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)',
-      }}
+      })}
     >
-      <Toolbar sx={{ justifyContent: 'space-between', px: 3 }}>
+      <Toolbar
+        sx={(theme) => ({
+          justifyContent: 'space-between',
+          px: 3,
+          [theme.breakpoints.down('sm')]: {
+            flexDirection: 'column',
+            alignItems: 'stretch',
+            gap: 1,
+            px: 2,
+            py: 1,
+          },
+        })}
+      >
         {/* Left side - Navigation/Breadcrumbs */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box
+          sx={(theme) => ({
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            [theme.breakpoints.down('sm')]: {
+              justifyContent: 'space-between',
+              width: '100%',
+            },
+          })}
+        >
+          {/* Hamburger Menu Button - Mobile/Tablet Only */}
+          <Tooltip title="Toggle Sidebar">
+            <motion.div
+              whileHover="hover"
+              whileTap="tap"
+              variants={iconVariants}
+              style={{ display: 'inline-block' }}
+            >
+              <IconButton
+                size="large"
+                onClick={toggleSidebar}
+                sx={{
+                  background: darkMode
+                    ? 'rgba(30, 41, 59, 0.6)'
+                    : 'rgba(255, 255, 255, 0.7)',
+                  borderRadius: '12px',
+                  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                  '&:hover': {
+                    background: darkMode
+                      ? 'rgba(30, 41, 59, 0.8)'
+                      : 'rgba(255, 255, 255, 0.9)',
+                    transform: 'translateY(-1px)',
+                  },
+                  [muiTheme.breakpoints.up('md')]: {
+                    display: 'none',
+                  },
+                }}
+              >
+                <Menu sx={{ color: darkMode ? '#cbd5e1' : '#475569' }} />
+              </IconButton>
+            </motion.div>
+          </Tooltip>
+
           <motion.div
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
@@ -112,13 +168,21 @@ export default function TopbarEnhanced({ toggleNotifications, notificationsOpen,
             sx={{
               fontSize: 18,
               color: darkMode ? '#94a3b8' : '#64748b',
-              mx: 0.5
+              mx: 0.5,
+              [muiTheme.breakpoints.down('sm')]: {
+                display: 'none',
+              },
             }}
           />
 
           <motion.div
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
+            // Removed sx prop with theme usage to fix "theme is not defined" error
+            // Using style prop instead without theme dependency
+            style={{
+              flexGrow: 1,
+            }}
           >
             <Typography
               variant="h6"
@@ -127,6 +191,9 @@ export default function TopbarEnhanced({ toggleNotifications, notificationsOpen,
                 cursor: 'pointer',
                 color: darkMode ? '#f1f5f9' : '#1e293b',
                 fontSize: '1.1rem',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
               }}
             >
               {currentPage === 'Order List' ? 'Management' : currentPage}
@@ -139,7 +206,10 @@ export default function TopbarEnhanced({ toggleNotifications, notificationsOpen,
                 sx={{
                   fontSize: 18,
                   color: darkMode ? '#94a3b8' : '#64748b',
-                  mx: 0.5
+                  mx: 0.5,
+                  [muiTheme.breakpoints.down('sm')]: {
+                    display: 'none',
+                  },
                 }}
               />
               <Chip
@@ -153,6 +223,12 @@ export default function TopbarEnhanced({ toggleNotifications, notificationsOpen,
                   color: darkMode ? '#a855f7' : '#7c3aed',
                   fontWeight: 600,
                   fontSize: '0.75rem',
+                  whiteSpace: 'nowrap',
+                  [muiTheme.breakpoints.down('sm')]: {
+                    maxWidth: '100%',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  },
                 }}
               />
             </>
@@ -160,12 +236,27 @@ export default function TopbarEnhanced({ toggleNotifications, notificationsOpen,
         </Box>
 
         {/* Right side - Search and Icons */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box
+          sx={(theme) => ({
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            [theme.breakpoints.down('sm')]: {
+              justifyContent: 'space-between',
+              width: '100%',
+              mt: 1,
+            },
+          })}
+        >
           {/* Search Bar */}
           <motion.div
             whileHover="hover"
             variants={buttonVariants}
             transition={{ duration: 0.2 }}
+            style={{
+              flexGrow: 1,
+              maxWidth: '100%',
+            }}
           >
             <SearchWrapper>
               <SearchIconWrapper>
