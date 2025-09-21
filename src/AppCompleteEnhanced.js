@@ -6,12 +6,11 @@ import TopbarEnhanced from './components/TopbarEnhanced';
 import Dashboard from './components/Dashboard';
 import OrderListEnhanced from './components/OrderListEnhanced';
 import NotificationsPanelEnhanced from './components/NotificationsPanelEnhanced';
-import { ThemeContextProvider, useTheme } from './contexts/ThemeContext';
+import { ThemeContextProvider } from './contexts/ThemeContext';
 
-function AppContent() {
+function App() {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('Order List');
-  const { darkMode } = useTheme();
 
   const toggleNotifications = () => {
     setNotificationsOpen((prev) => !prev);
@@ -51,64 +50,43 @@ function AppContent() {
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        minHeight: '100vh',
-        background: darkMode
-          ? 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)'
-          : 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)'
-      }}
-    >
-      <SidebarEnhanced
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-      />
-      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <TopbarEnhanced
-          toggleNotifications={toggleNotifications}
-          notificationsOpen={notificationsOpen}
-          currentPage={currentPage}
-        />
-        <Box
-          sx={{
-            flex: 1,
-            background: darkMode
-              ? 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)'
-              : 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)'
-          }}
-        >
-          {renderCurrentPage()}
-        </Box>
-      </Box>
-      {notificationsOpen && (
-        <>
-          <Box
-            onClick={closeNotifications}
-            sx={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              width: '100vw',
-              height: '100vh',
-              bgcolor: 'rgba(0,0,0,0.3)',
-              zIndex: 1200,
-            }}
-          />
-          <Box sx={{ position: 'relative', zIndex: 1300 }}>
-            <NotificationsPanelEnhanced onClose={closeNotifications} />
-          </Box>
-        </>
-      )}
-    </Box>
-  );
-}
-
-function App() {
-  return (
     <ThemeContextProvider>
       <CssBaseline />
-      <AppContent />
+      <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+        <SidebarEnhanced
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <TopbarEnhanced
+            toggleNotifications={toggleNotifications}
+            notificationsOpen={notificationsOpen}
+            currentPage={currentPage}
+          />
+          <Box sx={{ flex: 1 }}>
+            {renderCurrentPage()}
+          </Box>
+        </Box>
+        {notificationsOpen && (
+          <>
+            <Box
+              onClick={closeNotifications}
+              sx={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100vw',
+                height: '100vh',
+                bgcolor: 'rgba(0,0,0,0.3)',
+                zIndex: 1200,
+              }}
+            />
+            <Box sx={{ position: 'relative', zIndex: 1300 }}>
+              <NotificationsPanelEnhanced onClose={closeNotifications} />
+            </Box>
+          </>
+        )}
+      </Box>
     </ThemeContextProvider>
   );
 }

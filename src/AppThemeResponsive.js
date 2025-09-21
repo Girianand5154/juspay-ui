@@ -51,15 +51,7 @@ function AppContent() {
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        minHeight: '100vh',
-        background: darkMode
-          ? 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)'
-          : 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)'
-      }}
-    >
+    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
       <SidebarEnhanced
         currentPage={currentPage}
         onPageChange={handlePageChange}
