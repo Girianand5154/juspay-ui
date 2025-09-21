@@ -11,7 +11,7 @@ import { ThemeContextProvider } from './contexts/ThemeContext';
 function App() {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState('Dashboard');
+  const [currentPage, setCurrentPage] = useState('eCommerce');
 
   const toggleNotifications = () => {
     setNotificationsOpen((prev) => !prev);
@@ -34,12 +34,6 @@ function App() {
       case 'Order List':
         return <OrderList />;
       case 'eCommerce':
-        return <Dashboard />;
-      case 'Projects':
-        return <Dashboard />;
-      case 'Online Courses':
-        return <Dashboard />;
-      case 'Default':
         return <Dashboard />;
       default:
         return <Dashboard />;

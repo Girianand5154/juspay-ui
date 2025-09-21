@@ -8,6 +8,7 @@ import NotificationsPanel from './components/NotificationsPanel';
 
 function App() {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState('eCommerce');
 
   const toggleNotifications = () => {
     setNotificationsOpen((prev) => !prev);
@@ -23,7 +24,11 @@ function App() {
       <Box sx={{ display: 'flex', height: '100vh', bgcolor: '#f9fafb', position: 'relative' }}>
         <Sidebar />
         <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-          <Topbar toggleNotifications={toggleNotifications} notificationsOpen={notificationsOpen} />
+          <Topbar
+            toggleNotifications={toggleNotifications}
+            notificationsOpen={notificationsOpen}
+            currentPage={currentPage}
+          />
           <Dashboard />
         </Box>
         {notificationsOpen && (

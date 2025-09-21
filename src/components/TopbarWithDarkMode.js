@@ -39,7 +39,7 @@ const iconVariants = {
   tap: { scale: 0.9 },
 };
 
-export default function Topbar({ toggleNotifications, notificationsOpen, currentPage = 'Dashboard' }) {
+export default function Topbar({ toggleNotifications, notificationsOpen, currentPage = 'eCommerce' }) {
   const { darkMode, toggleDarkMode } = useTheme();
 
   return (
@@ -47,13 +47,21 @@ export default function Topbar({ toggleNotifications, notificationsOpen, current
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         {/* Left side - Navigation/Breadcrumbs */}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-            Dashboards
+          <Typography variant="h6" sx={{ fontWeight: 'bold', cursor: 'pointer' }}>
+            Dashboard
           </Typography>
           <NavigateNext sx={{ mx: 1, fontSize: 20 }} />
-          <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-            {currentPage}
+          <Typography variant="h6" sx={{ fontWeight: 'bold', cursor: 'pointer' }}>
+            {currentPage === 'Order List' ? 'Management' : currentPage}
           </Typography>
+          {(currentPage === 'Order List') && (
+            <>
+              <NavigateNext sx={{ mx: 1, fontSize: 20 }} />
+              <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                {currentPage}
+              </Typography>
+            </>
+          )}
         </Box>
 
         {/* Right side - Search and Icons */}

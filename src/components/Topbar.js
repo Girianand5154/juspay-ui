@@ -37,19 +37,27 @@ const iconVariants = {
   tap: { scale: 0.9 },
 };
 
-export default function Topbar({ toggleNotifications, notificationsOpen, currentPage = 'Dashboard' }) {
+export default function Topbar({ toggleNotifications, notificationsOpen, currentPage = 'eCommerce' }) {
   return (
     <AppBar position="static" color="transparent" elevation={0} sx={{ borderBottom: '1px solid #e0e0e0' }}>
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         {/* Left side - Navigation/Breadcrumbs */}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#374151' }}>
-            Dashboards
+          <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#374151', cursor: 'pointer' }}>
+            Dashboard
           </Typography>
           <NavigateNext sx={{ mx: 1, color: '#9ca3af', fontSize: 20 }} />
-          <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#374151' }}>
-            {currentPage}
+          <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#374151', cursor: 'pointer' }}>
+            {currentPage === 'Order List' ? 'Management' : currentPage}
           </Typography>
+          {(currentPage === 'Order List') && (
+            <>
+              <NavigateNext sx={{ mx: 1, color: '#9ca3af', fontSize: 20 }} />
+              <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#374151' }}>
+                {currentPage}
+              </Typography>
+            </>
+          )}
         </Box>
 
         {/* Right side - Search and Icons */}

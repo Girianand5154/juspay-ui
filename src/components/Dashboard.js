@@ -36,7 +36,7 @@ const CustomBarTooltip = ({ active, payload, label, darkMode }) => {
               {entry.dataKey === 'projection' ? 'Projection' : 'Actual'}:
             </Typography>
             <Typography variant="body2" sx={{ color: darkMode ? '#f9fafb' : '#374151', fontWeight: 'bold' }}>
-              {entry.value}
+              {entry.value}M
             </Typography>
           </Box>
         ))}
@@ -148,12 +148,12 @@ const ecomStats = [
 ];
 
 const projectionsData = [
-  { month: 'Jan', actual: 15, projection: 20 },
-  { month: 'Feb', actual: 18, projection: 22 },
-  { month: 'Mar', actual: 16, projection: 19 },
-  { month: 'Apr', actual: 20, projection: 25 },
-  { month: 'May', actual: 14, projection: 18 },
-  { month: 'Jun', actual: 21, projection: 23 },
+  { month: 'Jan', actual: 15, projection: 20, actualM: '15M', projectionM: '20M' },
+  { month: 'Feb', actual: 18, projection: 22, actualM: '18M', projectionM: '22M' },
+  { month: 'Mar', actual: 16, projection: 19, actualM: '16M', projectionM: '19M' },
+  { month: 'Apr', actual: 20, projection: 25, actualM: '20M', projectionM: '25M' },
+  { month: 'May', actual: 14, projection: 18, actualM: '14M', projectionM: '18M' },
+  { month: 'Jun', actual: 21, projection: 23, actualM: '21M', projectionM: '23M' },
 ];
 
 const revenueData = [
@@ -275,18 +275,42 @@ export default function Dashboard() {
           <Paper sx={{
             p: 2,
             borderRadius: 2,
-            height: 255,
+            height: 256,
             bgcolor: darkMode ? '#1f2937' : '#ffffff',
             border: darkMode ? '1px solid #374151' : 'none'
           }}>
             <Typography variant="subtitle2" gutterBottom fontWeight="bold" sx={{ color: darkMode ? '#f9fafb' : '#374151' }}>Projections vs Actuals</Typography>
             <ResponsiveContainer width="100%" height="85%">
-              <BarChart data={projectionsData}>
-                <XAxis dataKey="month" />
-                <YAxis />
+              <BarChart
+                data={projectionsData}
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+              >
+                <XAxis
+                  dataKey="month"
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 12, fill: darkMode ? '#d1d5db' : '#6b7280' }}
+                />
+                <YAxis
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 12, fill: darkMode ? '#d1d5db' : '#6b7280' }}
+                  tickFormatter={(value) => `${value}M`}
+                  domain={[0, 30]}
+                />
                 <Tooltip content={<CustomBarTooltip darkMode={darkMode} />} />
-                <Bar dataKey="projection" stackId="a" fill="#a3bffa" />
-                <Bar dataKey="actual" stackId="a" fill="#3b82f6" />
+                <Bar
+                  dataKey="actual"
+                  stackId="a"
+                  fill="#a8d5ba"
+                  radius={[2, 2, 0, 0]}
+                />
+                <Bar
+                  dataKey="projection"
+                  stackId="a"
+                  fill="#a3bffa"
+                  radius={[4, 4, 2, 2]}
+                />
               </BarChart>
             </ResponsiveContainer>
           </Paper>
