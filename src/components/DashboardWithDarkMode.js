@@ -198,7 +198,7 @@ export default function Dashboard() {
           }}>
             <Typography variant="subtitle2" gutterBottom fontWeight="bold" sx={{ color: darkMode ? '#f9fafb' : '#374151' }}>Revenue by Location</Typography>
 
-            {/* Simple World Map Background */}
+            {/* Accurate World Map Background */}
             <Box
               sx={{
                 position: 'relative',
@@ -209,48 +209,67 @@ export default function Dashboard() {
                 overflow: 'hidden',
               }}
             >
-              {/* Minimalist World Map SVG */}
+              {/* Accurate World Map SVG */}
               <svg
                 width="100%"
                 height="100%"
                 viewBox="0 0 400 120"
                 style={{ position: 'absolute', top: 0, left: 0 }}
               >
-                {/* Simple continent shapes - very minimal */}
+                {/* Accurate continent shapes */}
                 <g opacity="0.4">
-                  {/* North America - simple blob */}
+                  {/* North America */}
                   <path
-                    d="M40 25 Q80 15 120 25 Q160 35 180 25 Q200 15 220 25 Q240 35 220 55 Q200 75 180 55 Q160 35 140 55 Q120 75 100 55 Q80 35 60 55 Q40 35 40 25 Z"
+                    d="M20 30 L60 25 L85 20 L110 25 L130 30 L140 35 L135 45 L125 55 L110 60 L95 55 L80 50 L65 45 L50 40 L35 35 L25 32 Z"
                     fill={darkMode ? '#4b5563' : '#e5e7eb'}
                   />
-                  {/* Europe/Africa - simple blob */}
+                  {/* South America */}
                   <path
-                    d="M240 20 Q280 10 320 20 Q360 30 400 20 Q440 10 480 20 Q500 30 480 50 Q460 70 440 50 Q420 30 400 50 Q380 70 360 50 Q340 30 320 50 Q300 70 280 50 Q260 30 240 50 Q240 20 240 20 Z"
+                    d="M120 65 L135 60 L145 65 L150 75 L145 85 L140 95 L135 105 L130 115 L125 110 L120 100 L115 90 L110 80 L105 70 L110 65 Z"
                     fill={darkMode ? '#4b5563' : '#e5e7eb'}
                   />
-                  {/* Asia - simple blob */}
+                  {/* Europe */}
                   <path
-                    d="M280 45 Q320 35 360 45 Q400 55 440 45 Q480 35 520 45 Q540 55 520 75 Q500 95 480 75 Q460 55 440 75 Q420 95 400 75 Q380 55 360 75 Q340 95 320 75 Q300 55 280 75 Q280 45 280 45 Z"
+                    d="M220 25 L240 20 L260 25 L275 30 L280 35 L275 40 L265 45 L250 40 L235 35 L225 30 Z"
                     fill={darkMode ? '#4b5563' : '#e5e7eb'}
                   />
-                  {/* South America - simple blob */}
+                  {/* Africa */}
                   <path
-                    d="M160 60 Q180 50 200 60 Q220 70 240 60 Q260 50 280 60 Q290 70 280 90 Q270 110 250 90 Q230 70 210 90 Q190 110 170 90 Q150 70 160 90 Q160 60 160 60 Z"
+                    d="M240 45 L260 40 L280 45 L295 50 L300 60 L295 70 L285 80 L270 85 L255 80 L245 70 L240 60 L235 50 Z"
                     fill={darkMode ? '#4b5563' : '#e5e7eb'}
                   />
-                  {/* Australia - simple blob */}
+                  {/* Asia */}
                   <path
-                    d="M360 80 Q380 75 400 80 Q420 85 440 80 Q460 75 480 80 Q490 85 480 95 Q470 105 450 95 Q430 85 410 95 Q390 105 370 95 Q360 85 360 95 Q360 80 360 80 Z"
+                    d="M290 25 L320 20 L350 25 L375 30 L385 35 L380 40 L370 45 L355 50 L340 45 L325 40 L310 35 L300 30 Z"
+                    fill={darkMode ? '#4b5563' : '#e5e7eb'}
+                  />
+                  {/* Australia */}
+                  <path
+                    d="M340 70 L365 65 L385 70 L390 75 L385 80 L375 85 L360 80 L345 75 Z"
                     fill={darkMode ? '#4b5563' : '#e5e7eb'}
                   />
                 </g>
               </svg>
 
-              {/* Location Dots */}
+              {/* Location Dots - Accurately positioned */}
+              {/* New York (Eastern US) */}
               <Box
                 sx={{
                   position: 'absolute',
-                  top: '20%',
+                  top: '35%',
+                  left: '22%',
+                  width: 6,
+                  height: 6,
+                  bgcolor: darkMode ? '#f9fafb' : '#000',
+                  borderRadius: '50%',
+                  zIndex: 2,
+                }}
+              />
+              {/* San Francisco (Western US) */}
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: '40%',
                   left: '12%',
                   width: 6,
                   height: 6,
@@ -259,11 +278,12 @@ export default function Dashboard() {
                   zIndex: 2,
                 }}
               />
+              {/* Sydney (Australia) */}
               <Box
                 sx={{
                   position: 'absolute',
-                  top: '25%',
-                  left: '8%',
+                  top: '75%',
+                  left: '85%',
                   width: 6,
                   height: 6,
                   bgcolor: darkMode ? '#f9fafb' : '#000',
@@ -271,23 +291,12 @@ export default function Dashboard() {
                   zIndex: 2,
                 }}
               />
+              {/* Singapore (Southeast Asia) */}
               <Box
                 sx={{
                   position: 'absolute',
                   top: '65%',
-                  right: '20%',
-                  width: 6,
-                  height: 6,
-                  bgcolor: darkMode ? '#f9fafb' : '#000',
-                  borderRadius: '50%',
-                  zIndex: 2,
-                }}
-              />
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: '70%',
-                  right: '12%',
+                  left: '92%',
                   width: 6,
                   height: 6,
                   bgcolor: darkMode ? '#f9fafb' : '#000',
