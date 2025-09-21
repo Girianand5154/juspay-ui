@@ -310,7 +310,6 @@ export default function Dashboard() {
                       sx={{
                         p: 2.5,
                         background: stat.bgColor,
-                        borderRadius: 3,
                         height: 140,
                         display: 'flex',
                         flexDirection: 'column',
@@ -322,6 +321,7 @@ export default function Dashboard() {
                           : '0 8px 32px rgba(0, 0, 0, 0.1)',
                         border: darkMode ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(229, 231, 235, 1)',
                         backdropFilter: 'blur(10px)',
+                        borderRadius: 3,
                         '&::before': {
                           content: '""',
                           position: 'absolute',
@@ -406,7 +406,6 @@ export default function Dashboard() {
                       sx={{
                         p: 2.5,
                         background: stat.bgColor,
-                        borderRadius: 3,
                         height: 140,
                         display: 'flex',
                         flexDirection: 'column',
@@ -418,6 +417,7 @@ export default function Dashboard() {
                           : '0 8px 32px rgba(0, 0, 0, 0.1)',
                         border: '1px solid rgba(255, 255, 255, 0.1)',
                         backdropFilter: 'blur(10px)',
+                        borderRadius: 3,
                         '&::before': {
                           content: '""',
                           position: 'absolute',
@@ -507,6 +507,7 @@ export default function Dashboard() {
                   : '0 8px 32px rgba(0, 0, 0, 0.1)',
                 position: 'relative',
                 overflow: 'hidden',
+                borderRadius: 3,
                 '&::before': {
                   content: '""',
                   position: 'absolute',

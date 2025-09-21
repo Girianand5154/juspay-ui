@@ -13,7 +13,7 @@ import { ThemeContextProvider, useTheme } from './contexts/ThemeContext';
 
 function AppContent() {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState('Order List');
+  const [currentPage, setCurrentPage] = useState('eCommerce');
   const { darkMode } = useTheme();
 
   const toggleNotifications = () => {
