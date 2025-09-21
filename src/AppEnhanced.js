@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
-import Sidebar from './components/SidebarDark';
-import Topbar from './components/TopbarDark';
+import SidebarEnhanced from './components/SidebarEnhanced';
+import TopbarEnhanced from './components/TopbarEnhanced';
 import Dashboard from './components/Dashboard';
-import OrderList from './components/OrderListDark';
+import OrderListEnhanced from './components/OrderListEnhanced';
 import NotificationsPanel from './components/NotificationsPanel';
 import { ThemeContextProvider } from './contexts/ThemeContext';
 
 function App() {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState('Dashboard');
+  const [currentPage, setCurrentPage] = useState('Order List');
 
   const toggleNotifications = () => {
     setNotificationsOpen((prev) => !prev);
@@ -21,10 +20,6 @@ function App() {
     setNotificationsOpen(false);
   };
 
-  const toggleSidebar = () => {
-    setSidebarOpen((prev) => !prev);
-  };
-
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -32,39 +27,45 @@ function App() {
   const renderCurrentPage = () => {
     switch (currentPage) {
       case 'Order List':
-        return <OrderList />;
+        return <OrderListEnhanced />;
       case 'eCommerce':
         return <Dashboard />;
+      case 'Overview':
+        return (
+          <Box sx={{ p: 3 }}>
+            <h1>Overview Dashboard</h1>
+            <p>This is the overview page content with modern styling.</p>
+          </Box>
+        );
       case 'Projects':
-        return <Dashboard />;
-      case 'Online Courses':
-        return <Dashboard />;
-      case 'Default':
-        return <Dashboard />;
+        return (
+          <Box sx={{ p: 3 }}>
+            <h1>Projects Dashboard</h1>
+            <p>This is the projects page content with modern styling.</p>
+          </Box>
+        );
       default:
-        return <Dashboard />;
+        return <OrderListEnhanced />;
     }
   };
 
   return (
     <ThemeContextProvider>
       <CssBaseline />
-      <Box sx={{ display: 'flex', height: '100vh' }}>
-        <Sidebar
-          open={sidebarOpen}
-          toggleOpen={toggleSidebar}
+      <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+        <SidebarEnhanced
           currentPage={currentPage}
           onPageChange={handlePageChange}
         />
-        <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-          <Topbar
+        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <TopbarEnhanced
             toggleNotifications={toggleNotifications}
             notificationsOpen={notificationsOpen}
-            toggleSidebar={toggleSidebar}
-            sidebarOpen={sidebarOpen}
             currentPage={currentPage}
           />
-          {renderCurrentPage()}
+          <Box sx={{ flex: 1 }}>
+            {renderCurrentPage()}
+          </Box>
         </Box>
         {notificationsOpen && (
           <>
