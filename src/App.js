@@ -15,6 +15,7 @@ function AppContent() {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('eCommerce');
   const { darkMode } = useTheme();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleNotifications = () => {
     setNotificationsOpen((prev) => !prev);
@@ -26,6 +27,10 @@ function AppContent() {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
+  };
+
+  const toggleSidebar = () => {
+    setSidebarOpen((prev) => !prev);
   };
 
   const renderCurrentPage = () => {
@@ -163,35 +168,92 @@ function AppContent() {
 
   return (
     <Box
-      sx={{
+      sx={(theme) => ({
         display: 'flex',
         minHeight: '100vh',
         background: darkMode
           ? 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)'
-          : 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)'
-      }}
+          : 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+        [theme.breakpoints.down('md')]: {
+          flexDirection: 'column',
+        },
+      })}
     >
       <SidebarEnhanced
         currentPage={currentPage}
         onPageChange={handlePageChange}
+        open={sidebarOpen}
+        zIndex={sidebarOpen ? 1400 : 'auto'}
       />
-      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <Box
+        sx={(theme) => ({
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+        [theme.breakpoints.down('md')]: {
+          width: '100%',
+          marginLeft: sidebarOpen ? 280 : 0, // Account for sidebar width on mobile (280px)
+          transition: 'margin-left 0.3s ease-in-out',
+        },
+        })}
+      >
         <TopbarEnhanced
           toggleNotifications={toggleNotifications}
           notificationsOpen={notificationsOpen}
           currentPage={currentPage}
+          toggleSidebar={toggleSidebar}
         />
         <Box
-          sx={{
+          sx={(theme) => ({
             flex: 1,
             background: darkMode
               ? 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)'
-              : 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)'
-          }}
+              : 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+            [theme.breakpoints.down('md')]: {
+              marginLeft: sidebarOpen ? 0 : 0, // Don't shift content on mobile/tablet
+              width: '100%',
+            },
+          })}
         >
           {renderCurrentPage()}
         </Box>
       </Box>
+      {sidebarOpen && (
+        <Box
+          onClick={toggleSidebar}
+          sx={(theme) => ({
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            bgcolor: 'rgba(0,0,0,0.3)',
+            zIndex: 1200, // Lower than sidebar z-index (1400)
+            pointerEvents: 'none', // Allow clicks to pass through to sidebar
+            [theme.breakpoints.up('md')]: {
+              display: 'none',
+            },
+          })}
+        />
+      )}
+      {sidebarOpen && (
+        <Box
+          onClick={toggleSidebar}
+          sx={(theme) => ({
+            position: 'fixed',
+            top: 0,
+            left: 240,
+            right: 0,
+            height: '100vh',
+            bgcolor: 'transparent',
+            zIndex: 1300, // Lower than sidebar z-index (1400)
+            pointerEvents: 'none', // Allow clicks to pass through to sidebar
+            [theme.breakpoints.down('md')]: {
+              display: 'none',
+            },
+          })}
+        />
+      )}
       {notificationsOpen && (
         <>
           <Box
@@ -206,9 +268,7 @@ function AppContent() {
               zIndex: 1200,
             }}
           />
-          <Box sx={{ position: 'relative', zIndex: 1300 }}>
-            <NotificationsPanelEnhanced onClose={closeNotifications} />
-          </Box>
+          <NotificationsPanelEnhanced onClose={closeNotifications} />
         </>
       )}
     </Box>

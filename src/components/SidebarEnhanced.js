@@ -52,7 +52,7 @@ const collapseVariants = {
   closed: { opacity: 0, height: 0, transition: { duration: 0.3 } },
 };
 
-export default function SidebarEnhanced({ open, currentPage, onPageChange }) {
+export default function SidebarEnhanced({ open, currentPage, onPageChange, zIndex = 'auto' }) {
   const { darkMode } = useTheme();
   const [openSections, setOpenSections] = React.useState({});
 
@@ -70,11 +70,15 @@ export default function SidebarEnhanced({ open, currentPage, onPageChange }) {
 
   const handleChildClick = (child) => {
     onPageChange(child.label);
+    // Close sidebar on mobile after navigation
+    if (window.innerWidth < 768) {
+      // The sidebar will close via the backdrop click handler
+    }
   };
 
   return (
     <Box
-      sx={{
+      sx={(theme) => ({
         width: 240,
         background: darkMode
           ? 'linear-gradient(180deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%)'
@@ -87,6 +91,7 @@ export default function SidebarEnhanced({ open, currentPage, onPageChange }) {
         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
         overflowX: 'hidden',
         position: 'relative',
+        zIndex: zIndex,
         '&::before': {
           content: '""',
           position: 'absolute',
@@ -98,7 +103,41 @@ export default function SidebarEnhanced({ open, currentPage, onPageChange }) {
             ? 'linear-gradient(90deg, transparent 0%, rgba(168, 85, 247, 0.3) 50%, transparent 100%)'
             : 'linear-gradient(90deg, transparent 0%, rgba(124, 58, 237, 0.2) 50%, transparent 100%)',
         },
-      }}
+        [theme.breakpoints.down('md')]: {
+          position: 'fixed',
+          zIndex: 1300,
+          width: 240,
+          left: 0,
+          top: 0,
+          transition: 'transform 0.3s ease-in-out',
+          boxShadow: darkMode
+            ? '2px 0 8px rgba(168, 85, 247, 0.3)'
+            : '2px 0 8px rgba(124, 58, 237, 0.2)',
+          pointerEvents: 'auto',
+          transform: open ? 'translateX(0)' : 'translateX(-100%)',
+        },
+        [theme.breakpoints.down('sm')]: {
+          position: 'fixed',
+          zIndex: 1400,
+          height: '100vh',
+          width: 280,
+          left: 0,
+          top: 0,
+          transition: 'transform 0.3s ease-in-out',
+          boxShadow: darkMode
+            ? '2px 0 8px rgba(168, 85, 247, 0.3)'
+            : '2px 0 8px rgba(124, 58, 237, 0.2)',
+          background: darkMode
+            ? 'linear-gradient(180deg, rgba(30, 41, 59, 0.98) 0%, rgba(15, 23, 42, 1) 100%)'
+            : 'linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 1) 100%)',
+          pointerEvents: 'auto',
+          transform: open ? 'translateX(0)' : 'translateX(-100%)',
+        },
+        [theme.breakpoints.down('xs')]: {
+          width: '100vw',
+          maxWidth: '100vw',
+        },
+      })}
     >
       {/* User Profile Section */}
       <Box

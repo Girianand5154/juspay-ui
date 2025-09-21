@@ -195,16 +195,25 @@ export default function NotificationsPanelEnhanced({ onClose }) {
       <Paper
         elevation={0}
         sx={{
-          width: { xs: 320, sm: 360 },
+          width: { xs: 'calc(100vw - 20px)', sm: 360 },
+          maxWidth: { xs: 'calc(100vw - 20px)', sm: 360 },
           bgcolor: darkMode ? 'rgba(30, 41, 59, 0.95)' : 'rgba(255, 255, 255, 0.95)',
           backdropFilter: 'blur(20px)',
           border: `1px solid ${darkMode ? 'rgba(168, 85, 247, 0.2)' : 'rgba(124, 58, 237, 0.1)'}`,
-          borderRadius: '20px 0 0 20px',
+          borderRadius: { xs: '20px', sm: '20px 0 0 20px' },
           p: 0,
           overflow: 'hidden',
           boxShadow: darkMode
             ? '0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2)'
             : '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          position: { xs: 'fixed', sm: 'absolute' },
+          top: { xs: 10, sm: 60 },
+          right: { xs: 10, sm: 0 },
+          bottom: { xs: 10, sm: 'auto' },
+          left: { xs: 10, sm: 'auto' },
+          height: { xs: 'auto', sm: 'calc(100vh - 80px)' },
+          maxHeight: { xs: 'calc(100vh - 20px)', sm: 'calc(100vh - 80px)' },
+          zIndex: 1500,
         }}
       >
         {/* Header */}

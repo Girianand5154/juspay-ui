@@ -244,13 +244,18 @@ export default function OrderListEnhanced() {
 
   return (
     <Box
-      sx={{
-        p: 3,
+      sx={(theme) => ({
+        p: { xs: 1, sm: 2, md: 3 },
         background: darkMode
           ? 'linear-gradient(135deg, #0c0a1a 0%, #1a1a2e 50%, #16213e 100%)'
           : 'linear-gradient(135deg, #fef7ff 0%, #f0f9ff 50%, #fef3c7 100%)',
         minHeight: '100vh',
-      }}
+        position: 'relative',
+        zIndex: 1,
+        [theme.breakpoints.down('md')]: {
+          p: 1,
+        },
+      })}
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -273,15 +278,30 @@ export default function OrderListEnhanced() {
         >
           {/* Header */}
           <Box
-            sx={{
-              p: 3,
+            sx={(theme) => ({
+              p: { xs: 2, sm: 2.5, md: 3 },
               borderBottom: `1px solid ${darkMode ? 'rgba(168, 85, 247, 0.15)' : 'rgba(124, 58, 237, 0.1)'}`,
               background: darkMode
                 ? 'linear-gradient(135deg, rgba(168, 85, 247, 0.08) 0%, rgba(30, 41, 59, 0.05) 100%)'
                 : 'linear-gradient(135deg, rgba(124, 58, 237, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%)',
-            }}
+              [theme.breakpoints.down('md')]: {
+                p: 2,
+              },
+            })}
           >
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <Box sx={(theme) => ({
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              mb: 2,
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 2, sm: 0 },
+              [theme.breakpoints.down('md')]: {
+                flexDirection: 'column',
+                gap: 2,
+                textAlign: 'center',
+              },
+            })}>
               <Box>
                 <Typography
                   variant="h5"
@@ -359,7 +379,17 @@ export default function OrderListEnhanced() {
           </Box>
 
           {/* Search Bar */}
-          <Toolbar sx={{ pl: 3, pr: 3, pt: 2, pb: 2 }}>
+          <Toolbar sx={(theme) => ({
+            pl: { xs: 2, sm: 2.5, md: 3 },
+            pr: { xs: 2, sm: 2.5, md: 3 },
+            pt: 2,
+            pb: 2,
+            justifyContent: { xs: 'center', sm: 'flex-start' },
+            [theme.breakpoints.down('md')]: {
+              pl: 2,
+              pr: 2,
+            },
+          })}>
             <motion.div
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
@@ -368,14 +398,36 @@ export default function OrderListEnhanced() {
                 <SearchIconWrapper>
                   <Search sx={{ fontSize: 20 }} />
                 </SearchIconWrapper>
-                <StyledInputBase placeholder="Search orders, users, or projects..." inputProps={{ 'aria-label': 'search' }} />
+                <StyledInputBase
+                  placeholder="Search orders, users, or projects..."
+                  inputProps={{ 'aria-label': 'search' }}
+                />
               </SearchWrapper>
             </motion.div>
           </Toolbar>
 
           {/* Table */}
-          <TableContainer>
-            <Table size="small">
+          <TableContainer sx={(theme) => ({
+            overflowX: 'auto',
+            [theme.breakpoints.down('md')]: {
+              '&::-webkit-scrollbar': {
+                height: '6px',
+              },
+              '&::-webkit-scrollbar-track': {
+                background: darkMode ? 'rgba(30, 41, 59, 0.3)' : 'rgba(248, 250, 252, 0.3)',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                background: darkMode ? 'rgba(168, 85, 247, 0.3)' : 'rgba(124, 58, 237, 0.2)',
+                borderRadius: '3px',
+              },
+            },
+          })}>
+            <Table size="small" sx={(theme) => ({
+              minWidth: 800,
+              [theme.breakpoints.down('md')]: {
+                minWidth: 700,
+              },
+            })}>
               <TableHead>
                 <TableRow
                   sx={{
