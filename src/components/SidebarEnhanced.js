@@ -4,6 +4,12 @@ import { Dashboard, ShoppingCart, Folder, School, Person, AccountBox, Business, 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 
+// Mock request object for logging (since this is a frontend component)
+const mockRequest = {
+  method: 'GET',
+  path: '/dashboard'
+};
+
 const menuItems = [
   { label: 'Overview', type: 'favorite' },
   { label: 'Projects', type: 'favorite' },
@@ -62,18 +68,38 @@ export default function SidebarEnhanced({ open, currentPage, onPageChange, zInde
 
   const handleMenuClick = (item) => {
     if (item.type === 'favorite') {
+      // Log the navigation request
+      console.log(`Request received: ${mockRequest.method} ${mockRequest.path}/${item.label.toLowerCase().replace(' ', '-')}`);
+
       onPageChange(item.label);
+
+      // Close sidebar after navigation (works on all screen sizes)
+      setTimeout(() => {
+        if (typeof window !== 'undefined') {
+          const closeEvent = new CustomEvent('closeSidebar');
+          window.dispatchEvent(closeEvent);
+        }
+      }, 100);
     } else if (item.children) {
       // Handle section clicks if needed
     }
   };
 
   const handleChildClick = (child) => {
+    // Log the navigation request
+    console.log(`Request received: ${mockRequest.method} ${mockRequest.path}/${child.label.toLowerCase().replace(' ', '-')}`);
+
     onPageChange(child.label);
-    // Close sidebar on mobile after navigation
-    if (window.innerWidth < 768) {
-      // The sidebar will close via the backdrop click handler
-    }
+
+    // Close sidebar after navigation (works on all screen sizes)
+    setTimeout(() => {
+      if (typeof window !== 'undefined') {
+        // Trigger sidebar close by dispatching a custom event
+        // This will be handled by the parent component's backdrop click handler
+        const closeEvent = new CustomEvent('closeSidebar');
+        window.dispatchEvent(closeEvent);
+      }
+    }, 100);
   };
 
   return (
@@ -115,6 +141,17 @@ export default function SidebarEnhanced({ open, currentPage, onPageChange, zInde
             : '2px 0 8px rgba(124, 58, 237, 0.2)',
           pointerEvents: 'auto',
           transform: open ? 'translateX(0)' : 'translateX(-100%)',
+          // Ensure sidebar is above backdrop on mobile
+          '&::after': {
+            content: '""',
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: -1,
+            pointerEvents: 'auto',
+          },
         },
         [theme.breakpoints.down('sm')]: {
           position: 'fixed',
@@ -132,6 +169,17 @@ export default function SidebarEnhanced({ open, currentPage, onPageChange, zInde
             : 'linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 1) 100%)',
           pointerEvents: 'auto',
           transform: open ? 'translateX(0)' : 'translateX(-100%)',
+          // Ensure sidebar is above backdrop on mobile
+          '&::after': {
+            content: '""',
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: -1,
+            pointerEvents: 'auto',
+          },
         },
         [theme.breakpoints.down('xs')]: {
           width: '100vw',
