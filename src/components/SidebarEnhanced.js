@@ -129,34 +129,10 @@ export default function SidebarEnhanced({ open, currentPage, onPageChange, zInde
             ? 'linear-gradient(90deg, transparent 0%, rgba(168, 85, 247, 0.3) 50%, transparent 100%)'
             : 'linear-gradient(90deg, transparent 0%, rgba(124, 58, 237, 0.2) 50%, transparent 100%)',
         },
-        [theme.breakpoints.down('md')]: {
+        // Tablet specific styles (768px - 1024px)
+        [theme.breakpoints.between('sm', 'md')]: {
           position: 'fixed',
           zIndex: 1300,
-          width: 240,
-          left: 0,
-          top: 0,
-          transition: 'transform 0.3s ease-in-out',
-          boxShadow: darkMode
-            ? '2px 0 8px rgba(168, 85, 247, 0.3)'
-            : '2px 0 8px rgba(124, 58, 237, 0.2)',
-          pointerEvents: 'auto',
-          transform: open ? 'translateX(0)' : 'translateX(-100%)',
-          // Ensure sidebar is above backdrop on mobile
-          '&::after': {
-            content: '""',
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: -1,
-            pointerEvents: 'auto',
-          },
-        },
-        [theme.breakpoints.down('sm')]: {
-          position: 'fixed',
-          zIndex: 1400,
-          height: '100vh',
           width: 280,
           left: 0,
           top: 0,
@@ -164,9 +140,32 @@ export default function SidebarEnhanced({ open, currentPage, onPageChange, zInde
           boxShadow: darkMode
             ? '2px 0 8px rgba(168, 85, 247, 0.3)'
             : '2px 0 8px rgba(124, 58, 237, 0.2)',
-          background: darkMode
-            ? 'linear-gradient(180deg, rgba(30, 41, 59, 0.98) 0%, rgba(15, 23, 42, 1) 100%)'
-            : 'linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 1) 100%)',
+          pointerEvents: 'auto',
+          transform: open ? 'translateX(0)' : 'translateX(-100%)',
+          // Ensure sidebar is above backdrop on tablet
+          '&::after': {
+            content: '""',
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: -1,
+            pointerEvents: 'auto',
+          },
+        },
+        // Mobile specific styles (below 768px)
+        [theme.breakpoints.down('sm')]: {
+          position: 'fixed',
+          zIndex: 1300,
+          width: '100vw',
+          maxWidth: '100vw',
+          left: 0,
+          top: 0,
+          transition: 'transform 0.3s ease-in-out',
+          boxShadow: darkMode
+            ? '2px 0 8px rgba(168, 85, 247, 0.3)'
+            : '2px 0 8px rgba(124, 58, 237, 0.2)',
           pointerEvents: 'auto',
           transform: open ? 'translateX(0)' : 'translateX(-100%)',
           // Ensure sidebar is above backdrop on mobile
@@ -180,10 +179,6 @@ export default function SidebarEnhanced({ open, currentPage, onPageChange, zInde
             zIndex: -1,
             pointerEvents: 'auto',
           },
-        },
-        [theme.breakpoints.down('xs')]: {
-          width: '100vw',
-          maxWidth: '100vw',
         },
       })}
     >
