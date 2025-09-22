@@ -33,6 +33,18 @@ function AppContent() {
     setSidebarOpen((prev) => !prev);
   };
 
+  // Handle sidebar close event from navigation clicks
+  React.useEffect(() => {
+    const handleCloseSidebar = () => {
+      setSidebarOpen(false);
+    };
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('closeSidebar', handleCloseSidebar);
+      return () => window.removeEventListener('closeSidebar', handleCloseSidebar);
+    }
+  }, []);
+
   const renderCurrentPage = () => {
     switch (currentPage) {
       case 'Order List':
@@ -229,7 +241,8 @@ function AppContent() {
             height: '100vh',
             bgcolor: 'rgba(0,0,0,0.3)',
             zIndex: 1200, // Lower than sidebar z-index (1400)
-            pointerEvents: 'none', // Allow clicks to pass through to sidebar
+            pointerEvents: 'auto', // Enable clicks to close sidebar
+            cursor: 'pointer',
             [theme.breakpoints.up('md')]: {
               display: 'none',
             },
@@ -247,7 +260,8 @@ function AppContent() {
             height: '100vh',
             bgcolor: 'transparent',
             zIndex: 1300, // Lower than sidebar z-index (1400)
-            pointerEvents: 'none', // Allow clicks to pass through to sidebar
+            pointerEvents: 'auto', // Enable clicks to close sidebar
+            cursor: 'pointer',
             [theme.breakpoints.down('md')]: {
               display: 'none',
             },
