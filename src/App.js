@@ -41,7 +41,26 @@ function AppContent() {
 
     if (typeof window !== 'undefined') {
       window.addEventListener('closeSidebar', handleCloseSidebar);
-      return () => window.removeEventListener('closeSidebar', handleCloseSidebar);
+
+      // Cleanup function to remove event listener
+      return () => {
+        window.removeEventListener('closeSidebar', handleCloseSidebar);
+      };
+    }
+  }, []);
+
+  // Additional effect to ensure sidebar closes on tablet view after navigation
+  React.useEffect(() => {
+    const handleTabletSidebarClose = () => {
+      // This ensures sidebar closes on tablet view (768px - 1024px)
+      if (typeof window !== 'undefined' && window.innerWidth >= 768 && window.innerWidth <= 1024) {
+        setSidebarOpen(false);
+      }
+    };
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('closeSidebar', handleTabletSidebarClose);
+      return () => window.removeEventListener('closeSidebar', handleTabletSidebarClose);
     }
   }, []);
 
@@ -50,9 +69,7 @@ function AppContent() {
       case 'Order List':
         return <OrderListEnhanced />;
       case 'eCommerce':
-        return (
-          <Dashboard />
-        );
+        return <Dashboard />;
       case 'Overview':
         return (
           <Box
@@ -202,11 +219,11 @@ function AppContent() {
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
-        [theme.breakpoints.down('md')]: {
-          width: '100%',
-          marginLeft: sidebarOpen ? 280 : 0, // Account for sidebar width on mobile (280px)
-          transition: 'margin-left 0.3s ease-in-out',
-        },
+          [theme.breakpoints.down('md')]: {
+            width: '100%',
+            marginLeft: sidebarOpen ? 280 : 0, // Account for sidebar width on mobile (280px)
+            transition: 'margin-left 0.3s ease-in-out',
+          },
         })}
       >
         <TopbarEnhanced
